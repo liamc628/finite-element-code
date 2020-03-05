@@ -18,7 +18,7 @@ psi = polyLagrange(p); %shape function & derivative (psi) of degree p
 [K,F]=enforceBCs(K,F,boundaryValues,boundaryNodes); %enforce Neumann/Dirichlet BCs
 u = K\F;
 ```
-### test\Dirichlet results:
+### 1d\test\dirichlet results:
 ```MATLAB
 K =
 
@@ -47,5 +47,6 @@ u =
     0.0784
          0
 ```
-![](/tests/Dirichlet/plot.png)
+### 1d\tests\dirichlet plot (FEM solution vs. exact)
+![](/1d/tests/dirichlet/plot.png)
 
