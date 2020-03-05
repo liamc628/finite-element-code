@@ -10,13 +10,13 @@ For efficiency, k(x), b(x), and f(x) are discretized across each element domain 
 
 ## 1D MATLAB instructions for n-element BVP 
 ```MATLAB
-read_1D_mesh;
+read_1D_mesh; %read mesh/input
 read_1D_input;
 psi = polyLagrange(p); %shape function & derivative (psi) of degree p
 [ke,fe] = element1D(psi); %compute master element
 [K,F] = assemble1D(KofX,BofX,FofX,ke,fe,MESH); %assemble (n+1)x(n+1) system Ku=F
 [K,F]=enforceBCs(K,F,boundaryValues,boundaryNodes); %enforce Neumann/Dirichlet BCs
-u = K\F;
+u = K\F; %solve linear system
 ```
 ### 1d\test\dirichlet results:
 ```MATLAB
