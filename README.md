@@ -1,6 +1,6 @@
 # Finite-element code
 
-This code produces a finite-element solution to boundary value problems in the form: 
+This code produces a finite-element solution to boundary value problems of the form: 
 
 
 <img src="https://render.githubusercontent.com/render/math?math=-\frac{d}{dx} \big(k(x)\frac{du(x)}{dx}\big) %2B b(x)u(x) = f(x)" width=70% height=70%>
