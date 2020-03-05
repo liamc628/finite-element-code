@@ -28,7 +28,7 @@
 
 %% Open mesh file
 
-fid = fopen('mesh.1d');
+fid = fopen('\tests\1\mesh.1d');
 
 % Read in mesh name
 
