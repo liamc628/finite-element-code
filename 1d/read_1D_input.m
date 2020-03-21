@@ -28,7 +28,7 @@
 
 %% Open input file
 
-fid = fopen('tests\beam\input.1d');
+fid = fopen('tests\beam(8)\input.1d');
 
 
 % Read in mesh name
