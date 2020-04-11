@@ -8,12 +8,12 @@
 %  The following variables are assigned in this script:
 %
 %   - problemID = character string identifying problem
-%   - KofX = material function k(x) evaluated at the midpoint of each 
-%       element.
-%   - BofX = material function b(x) evaluated at the midpoint of each 
-%       element.
-%   - FofX = forcing function f(x) evaluated at the midpoint of each 
-%       element.
+%   - KofXY(nelems,1) = material function k(x,y) evaluated at the 
+%                       at the centroid of each element.
+%   - BofXY(nelems,1) = material function b(x,y) evaluated at the 
+%                       at the centroid of each element.
+%   - FofXY(nelems,1) = forcing function f(x,y) evaluated at the 
+%                       at the centroid of each element.
 %   - boundaryValues = a "Map object" storing the values of the boundary 
 %       conditions according to type, which can be accessed by 
 %       invoking:
@@ -22,14 +22,13 @@
 %       - boundaryValues('Neumann') ==> returns all Neumann boundary
 %           condition values.
 %       Note: These values are ordered consistent with the node numbers of
-%       boundaryNodes defined in read_1D_mesh.
+%       boundaryNodes defined in read_2D_mesh.
 %
 %--------------------------------------------------------------------------
 
-%% Open input file
-filePath=evalin('base','filePath');
-fid = fopen([filePath,'\input.1d']);
+% Open input file
 
+fid = fopen('input.2d');
 
 % Read in mesh name
 
@@ -37,18 +36,18 @@ problemID = fgetl(fid);
 
 % Read in material functions and forcing term values
 
-KofX = zeros(nElems,1);
-BofX = zeros(nElems,1);
-FofX = zeros(nElems,1);
+KofXY = zeros(nElems,1);
+BofXY = zeros(nElems,1);
+FofXY = zeros(nElems,1);
 for j = 1:nElems
     jj = fscanf(fid,'%g',1);
     if (jj~=j)
         fclose('all')
         error('********** Element numbering in input file is not sequential **********')
     end
-    KofX(j) = fscanf(fid,'%g',1);
-    BofX(j) = fscanf(fid,'%g',1);
-    FofX(j) = fscanf(fid,'%g',1);    
+    KofXY(j) = fscanf(fid,'%g',1);
+    BofXY(j) = fscanf(fid,'%g',1);
+    FofXY(j) = fscanf(fid,'%g',1);    
 end
 
 % Read in boundary condition data
@@ -91,4 +90,4 @@ fclose(fid);
 % Clear out superfluous variables
 
 clearvars -except meshName nElems nNodes p MESH boundaryNodes ...
-    problemID KofX BofX FofX boundaryValues
+    problemID KofXY BofXY FofXY boundaryValues
