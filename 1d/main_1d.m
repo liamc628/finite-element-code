@@ -1,6 +1,6 @@
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\HW6_Test_Problem_1\Mesh1');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\Problem_1.2\Mesh_4');
 read_1D_mesh;
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\HW6_Test_Problem_1\Mesh1');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\Problem_1.2\Mesh_4');
 read_1D_input;
 
 
@@ -10,14 +10,14 @@ read_1D_input;
 
 
 psi=polyLagrange(p);
-[ke,fe]=element1D(psi);
-[K,F,M]=assemble1D(KofX,BofX,FofX,ke,fe,MESH);
-[K,F]=enforceBCs(K,F,boundaryValues,boundaryNodes);
+[ke,fe,ae]=element1D(psi);
+[K,F,M]=assemble1D(KofX,BofX,FofX,ke,fe,ae,MESH);
+[K,F]=enforceBCs(K,F,KofX,boundaryValues,boundaryNodes);
 u0=K\F;
 L=-inv(M)*K;
 
 dt=0.1;
-T=5;
+T=0;
 steps=T/dt;
 
 utemp=u0;
@@ -28,7 +28,7 @@ end
 
 
 %disp(u);
-fem1Dplot(MESH,un,psi);
+fem1Dplot(MESH,u0,psi);
 
 
 

@@ -1,4 +1,4 @@
-function [K,F] = enforceBCs(K,F,boundaryValues,boundaryNodes)
+function [K,F] = enforceBCs(K,F,KofX,boundaryValues,boundaryNodes)
     p=evalin('base','p'); %degree
     %count number of Dirichlet/Neumann conditions to determine whether
     %pure/mixed BC case
@@ -38,18 +38,17 @@ function [K,F] = enforceBCs(K,F,boundaryValues,boundaryNodes)
                 F(i)=F(i)-K(i,1)*boundaryValues('Dirichlet');
                 K(i,1)=0;
             end
+            F(length(F))=F(length(F))+KofX(length(KofX))*boundaryValues('Neumann');
         elseif(dirichletNode==nNodes)
             for i=(nNodes-1):-1:(nNodes-1-p)
                 F(i)=F(i)-K(i,nNodes)*boundaryValues('Dirichlet');
                 K(i,nNodes)=0;
             end
+            F(1)=F(1)-KofX(1)*boundaryValues('Neumann');
         end     
         K(dirichletNode,:)=zeros(1,nNodes);
         K(dirichletNode,dirichletNode)=1;
         
-        %Neumann boundary condition
-        neumannNode=boundaryNodes('Neumann');
-        F(neumannNode)=F(neumannNode)+boundaryValues('Neumann');
     end
 end
 

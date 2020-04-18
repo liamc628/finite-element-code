@@ -30,8 +30,7 @@ for l = 1:N
         for j = 0:i
             psi(l).fun(end-j,end-(i-j)) = a(k,l);
             k = k+1;
-            psi(l).xider=bipolyder(psi(l).fun,1);
-            psi(l).etader=bipolyder(psi(l).fun,2 );
+            
         end
     end
     % Plot the resulting bipolynomials to verify they satisfy the nodal

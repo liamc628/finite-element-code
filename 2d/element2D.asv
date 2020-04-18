@@ -26,9 +26,7 @@ for n = 1:nElems
             
             
             ke(i,j)=(1/(4*element_area))*KofXY(n)*((y_31*psi(i).xider(2,2)-y_21*psi(i).etader(2,2))*(y_31*psi(j).xider(2,2)-y_21*psi(j).etader(2,2))...
-                +(x_31*psi(i).xider(2,2)-x_21*psi(i).etader(2,2))*(x_31*psi(j).xider(2,2)-x_21*psi(j).etader(2,2)));
-                %+element_area*BofXY(n)
-            ke(j,i) = ke(i,j);
+                +(x_31*psi(i).xider(2,2)-y_21*psi(i).etader(2,2))*(y_31*psi(j).xider(2,2)-y_21*psi(j).etader(2,2))
             
             
         end
