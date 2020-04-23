@@ -32,7 +32,7 @@
 
 % Open mesh file
 
-fid = fopen('C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.1\Dirichlet\Mesh 1\mesh.2d');
+fid = fopen('C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Unstructured_Mesh\mesh.2d');
 
 % Read in mesh name
 

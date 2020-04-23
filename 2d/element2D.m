@@ -6,7 +6,10 @@ degree = length(psi)-1;
 
 q = quadtriangle(3);
 nElems = length(MESH.ConnectivityList);
+nNodes = evalin('base','nNodes');
 ke = zeros(length(psi));
+K=zeros(nNodes);
+
 for n = 1:nElems
     currElement = MESH.ConnectivityList(n,:);
     one = currElement(1); two = currElement(2); three = currElement(3); %local node numbers
@@ -26,19 +29,23 @@ for n = 1:nElems
             
             
             ke(i,j)=(1/(4*element_area))*KofXY(n)*((y_31*psi(i).xider(2,2)-y_21*psi(i).etader(2,2))*(y_31*psi(j).xider(2,2)-y_21*psi(j).etader(2,2))...
-                +(x_31*psi(i).xider(2,2)-x_21*psi(i).etader(2,2))*(x_31*psi(j).xider(2,2)-x_21*psi(j).etader(2,2)));
-                %+element_area*BofXY(n)
+                +(x_31*psi(i).xider(2,2)-x_21*psi(i).etader(2,2))*(x_31*psi(j).xider(2,2)-x_21*psi(j).etader(2,2)))...
+                +element_area*BofXY(n)*dot(q.Weights,bipolyval(psi(i).fun,q.Points).*bipolyval(psi(j).fun,q.Points));
             ke(j,i) = ke(i,j);
             
+            K(currElement(i),currElement(j)) = K(currElement(i),currElement(j))+ke(i,j);
+            K(currElement(j),currElement(i))=K(currElement(i),currElement(j));
             
         end
+        fe(i)=2*element_area*FofXY(n)*dot(q.Weights,bipolyval(psi(i).fun,q.Points));
     end
     
-    %F(n) = 2*element_area*FofXY(n)*dot(q.Weights,bipolyval(psi(n).fun,q.Points));
+    
+    %F(n) = 
     
     
 end
 
-
+disp(K);
 end
 
