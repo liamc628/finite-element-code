@@ -1,4 +1,4 @@
-function [ke,fe] = element2D(psi,KofXY,BofXY,FofXY,MESH)
+function [K,F] = element2D(psi,KofXY,BofXY,FofXY,MESH)
 
 %ke = struct('k',[],'b',[]);
 fe = zeros(length(psi),1);
@@ -6,9 +6,10 @@ degree = length(psi)-1;
 
 q = quadtriangle(3);
 nElems = length(MESH.ConnectivityList);
-nNodes = evalin('base','nNodes');
+nNodes = length(MESH.Points);
 ke = zeros(length(psi));
 K=zeros(nNodes);
+F=zeros(nNodes,1);
 
 for n = 1:nElems
     currElement = MESH.ConnectivityList(n,:);
@@ -38,14 +39,15 @@ for n = 1:nElems
             
         end
         fe(i)=2*element_area*FofXY(n)*dot(q.Weights,bipolyval(psi(i).fun,q.Points));
+        F(currElement(i)) = F(currElement(i))+fe(i);
     end
     
     
-    %F(n) = 
+    
     
     
 end
 
-disp(K);
+%disp(K);
 end
 

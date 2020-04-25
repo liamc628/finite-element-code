@@ -11,12 +11,14 @@ function [K,F,M] = assemble1D(KofX,BofX,FofX,ke,fe,ae,nodelist)
     M=zeros(nNodes);
     
     c=1;
+    alpha=0; %upwinding parameter
     
     cnt = 1;
     %loop through K, assembling sub-matrices kn 
     for i=1:+p:nNodes-1
-        he=nodelist.Points(i+1)-nodelist.Points(i);
-        kn=(2/he)*KofX(cnt)*ke.k+(he/2)*BofX(cnt)*ke.b;%+ae;
+        he=nodelist.Points(i+p)-nodelist.Points(i);
+        KofX(cnt) = KofX(cnt)+0.5*alpha*c*he;
+        kn=(2/he)*KofX(cnt)*ke.k+(he/2)*BofX(cnt)*ke.b+ae;
         %disp(kn);
         
         %sub1,sub2 are the nodes that each kn corresponds to

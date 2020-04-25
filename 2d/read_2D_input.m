@@ -28,7 +28,7 @@
 
 % Open input file
 
-fid = fopen('C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Mesh_1\input.2d');
+fid = fopen('C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.1\Dirichlet\Mesh 1\input.2d');
 
 % Read in mesh name
 

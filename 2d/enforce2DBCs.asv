@@ -1,0 +1,16 @@
+function [K,F] = enforce2DBCs(K,F,KofXY,boundaryValues,boundaryNodes)
+    numDirichlet = length(boundaryNodes('Dirichlet'));
+    nNodes = length(K);
+    dirichletValues = boundaryValues('Dirichlet');
+    
+    for i = 1:numDirchlet
+        currDirchlet = boundaryNodes(i);
+        K(currDirichlet,:)=zeros(1,nNodes);
+        K(currDirichlet,currDirichlet)=1;
+        F(currDirichlet)=dirichletValues(currDirichlet);
+        
+        F(currDirichlet)=
+        
+    end
+
+end
