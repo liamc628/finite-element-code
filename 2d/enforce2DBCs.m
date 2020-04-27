@@ -4,7 +4,7 @@ nNodes = length(K);
 dirichletValues = boundaryValues('Dirichlet');
 dirichletNodes = boundaryNodes('Dirichlet');
 
-for currDirichlet = 1:numDirichlet  
+for currDirichlet = 1:numDirichlet
     for j =1:nNodes %columns
         F(j)=F(j)-K(j,dirichletNodes(currDirichlet))*dirichletValues(currDirichlet);
         K(j,dirichletNodes(currDirichlet))=0;
@@ -19,6 +19,5 @@ for currDirichlet = 1:numDirichlet
     %disp(K(currDirichlet,:));
     
 end
-
 
 end

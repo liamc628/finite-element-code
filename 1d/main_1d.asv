@@ -1,6 +1,6 @@
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\Problem_1.1\Homogeneous_Mixed');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\Problem_1.2\Mesh_1');
 read_1D_mesh;
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\Problem_1.1\Homogeneous_Mixed');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\Problem_1.2\Mesh_1');
 read_1D_input;
 
 
@@ -29,9 +29,7 @@ end
 
 fem1Dplot(MESH,un,psi);
 
-flux_1 = -1.7*1*(100-u0(2))/(1-MESH.Points(2))
-flux_10 = -1.7*10*(0-u0(nNodes-1))/(MESH.Points(nNodes)-MESH.Points(nNodes-1))
-
+flux_1 = -1.7*1*(100
 
 
 
