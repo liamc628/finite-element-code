@@ -1,4 +1,0 @@
-function [K,F] = 2enforceBCs(K,F,KofXY,boundaryValues,boundaryNodes)
-
-
-end

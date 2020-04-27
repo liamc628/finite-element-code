@@ -1,5 +1,0 @@
-function vals = sympolyval(func, points)
-    vals = zeros(length(points),1);
-    
-    
-end
