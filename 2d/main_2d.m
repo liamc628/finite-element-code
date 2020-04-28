@@ -1,8 +1,8 @@
 clear all;
 
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Mesh_1');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Unstructured_Mesh');
 read_2D_mesh;
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Mesh_1');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Unstructured_Mesh');
 read_2D_input;
 
 
@@ -26,13 +26,9 @@ y=0:0.01:1;
 %u_exact=x.*y.*(1-x).*(1-y);
 
 
-
-
-
 %2.1 Mixed exact solution
 
 u_exact=(x.^2-x).*(y.^2-1);
-
 
 
 %2.2 exact solution (Inhomogenous Dirichlet)
@@ -57,8 +53,9 @@ for k=1:3
         polyvals(k,i)=bipolyval(psi(i).fun,[q.Points(k,1),q.Points(k,2)]);
     end
 end
-stuff = [];
-stuff2=[];
+
+avg =[];
+
 for i=1:nElems
     currElement = MESH.ConnectivityList(i,:);
     one = currElement(1); two = currElement(2); three = currElement(3); %local node numbers
@@ -69,6 +66,7 @@ for i=1:nElems
     u_coeffs=[u(one) u(two) u(three)];
     
     element_area = polyarea([x(1) x(2) x(3)], [y(1) y(2) y(3)]);
+    avg = [avg element_area];
     
     for j=1:3
         
@@ -79,8 +77,6 @@ for i=1:nElems
         %disp(u_h);
  
         u_xy=u_function(x_j,y_j);
-        stuff = [stuff u_xy];
-        stuff2=[stuff2 u_h];
         
         L_2=L_2+q.Weights(j)*2*element_area*(u_xy-u_h)^2;
 
@@ -94,7 +90,7 @@ L_2=sqrt(L_2);
 
 disp(['L_2 error norm:',num2str(L_2)]);
 disp(['L_inf error norm:',num2str(L_inf)]);
-disp(element_area);
+disp(mean(avg));
 
 
 
