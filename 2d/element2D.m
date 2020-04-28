@@ -4,6 +4,7 @@ fe = zeros(length(psi),1);
 degree = length(psi)-1;
 
 q = quadtriangle(3);
+q=quadtriangle(2,'Domain',[0 0; 0 1; 1 0],'Type','nonproduct');
 
 nElems = length(MESH.ConnectivityList);
 nNodes = length(MESH.Points);
@@ -36,5 +37,7 @@ for n = 1:nElems
         
         fe(i)=0.5*element_area*FofXY(n)*dot(q.Weights,bipolyval(psi(i).fun,q.Points));
         F(currElement(i)) = F(currElement(i))+fe(i);
+        
     end
 end
+
