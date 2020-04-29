@@ -1,10 +1,11 @@
 clear all;
-
+%{
 assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Unstructured_Mesh');
 read_2D_mesh;
 assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Unstructured_Mesh');
 read_2D_input;
-
+%}
+user_input;
 
 %main
 psi = polyLagrange2D(p);
