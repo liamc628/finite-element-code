@@ -1,6 +1,6 @@
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\Problem_1.1\Homogeneous_Mixed');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\tests\test');
 read_1D_mesh;
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\Problem_1.1\Homogeneous_Mixed');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\1d\tests\test');
 read_1D_input;
 
 
