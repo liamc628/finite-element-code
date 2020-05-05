@@ -13,10 +13,11 @@ psi = polyLagrange2D(p);
 [K,F]=enforce2DBCs(K,F,KofXY,boundaryValues,boundaryNodes);
 u=K\F;
 trimesh(MESH.ConnectivityList,MESH.Points(:,1),MESH.Points(:,2),u); %FEM solution
-xlabel('x'); ylabel('y'); zlabel('z');
+xlabel('x'); ylabel('y')
 
 
 
+figure(2);
 %hold on;
 x=0:0.01:1;
 y=0:0.01:1;
@@ -36,7 +37,6 @@ u_exact=(x.^2-x).*(y.^2-1);
 
 %u_exact=(cosh(10*x)+cosh(10*y))/(2*cosh(10));
 
-%figure(2);
 %surf(x,y,u_exact);
 %--------------------------------------------------------------------------
 

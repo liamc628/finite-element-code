@@ -1,19 +1,13 @@
 p = 1;
 
-k_str = input('input k(x,y): ', 's');
-k_str = ['@(x,y) ',k_str];
-k_func = str2func(k_str);
 
-b_str = input('input b(x,y): ', 's');
-b_str = ['@(x,y) ',b_str];
-b_func = str2func(b_str);
 
-f_str = input('input f(x,y): ', 's');
-f_str = ['@(x,y) ',f_str];
-f_func = str2func(f_str);
+k_func = (@(x,y) 1);
+b_func = (@(x,y) 0);
+f_func = (@(x,y) 0);
 
-D_x = input('input x-domain (vector):');
-D_y = input('input y-domain (vector):');
+D_x = [0,1] %x-domain
+D_y = [0,1] %y-domain
 
 %----------------------------------------------|
 %            boundary 2                        |
@@ -25,40 +19,23 @@ D_y = input('input y-domain (vector):');
 %----------------------------------------------|
 
 %Dirichlet
-%{
-boundary_1_str = input(['u(',num2str(D_x(1)),',y) = '],'s');
-boundary_1_str = ['@(y)',boundary_1_str];
-boundary_2_str = input(['u(x,',num2str(D_y(2)),') = '],'s');
-boundary_2_str = ['@(x)',boundary_2_str];
-boundary_3_str = input(['u(',num2str(D_x(2)),',y) = '],'s');
-boundary_3_str = ['@(y)',boundary_3_str];
-boundary_4_str = input(['u(x,',num2str(D_y(1)),') = '],'s');
-boundary_4_str = ['@(x)',boundary_4_str];
 
-boundary_1_func = str2func(boundary_1_str);
-boundary_2_func = str2func(boundary_2_str);
-boundary_3_func = str2func(boundary_3_str);
-boundary_4_func = str2func(boundary_4_str);
-%}
-
-boundary_1_func = (@(y) 0);
-boundary_2_func = (@(x) 0);
-boundary_3_func = (@(y) 0);
-boundary_4_func = (@(x) 0);
+boundary_1_func = (@(y) y);
+boundary_2_func = (@(x) 1-x);
+boundary_3_func = (@(y) 1-y);
+boundary_4_func = (@(x) x);
 
 %BC check corners
 
 
 %Generate Mesh
-%{
+
 x_precision = 0.05;
 y_precision = 0.05;
 x=D_x(1):x_precision:D_x(2);
 y=D_y(1):y_precision:D_y(2);
 [x,y]=meshgrid(x,y);
-%}
-x = [0 0.5 0.25 0 0.5 0.25 0 0.5 1 0.75 1 0.75 1];
-y = [0 0 0.25 0.5 0.5 0.75 1 1 0 0.25 0.5 0.75 1];
+
 T=delaunay(x,y);
 MESH = triangulation(T,x(:),y(:));
 nElems = length(MESH.ConnectivityList);
@@ -71,11 +48,11 @@ dirichletNodes = unique(dirichletNodes);
 dirichletValues = zeros(length(dirichletNodes),1);
 
 for i=1:length(dirichletNodes)
-    if ismember(D_x(1),MESH.Points(dirichletNodes(i),:)) %boundary 1
+    if D_x(1) == MESH.Points(dirichletNodes(i),1) %boundary 1
         dirichletValues(i) = boundary_1_func(MESH.Points(dirichletNodes(i),2));
-    elseif ismember(D_y(2),MESH.Points(dirichletNodes(i),:)) %boundary 2
+    elseif D_y(2) == MESH.Points(dirichletNodes(i),2) %boundary 2
         dirichletValues(i) = boundary_2_func(MESH.Points(dirichletNodes(i),1));
-    elseif ismember(D_x(2),MESH.Points(dirichletNodes(i),:)) %boundary 3
+    elseif D_x(2) == MESH.Points(dirichletNodes(i),1) %boundary 3
         dirichletValues(i) = boundary_3_func(MESH.Points(dirichletNodes(i),2));
     else %boundary 4
         dirichletValues(i) = boundary_4_func(MESH.Points(dirichletNodes(i),1));
