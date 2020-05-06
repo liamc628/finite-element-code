@@ -75,6 +75,12 @@ we find our exact solution to be $u(x,y) = (x^2+x)(y^2-1)$ (left) and also an FE
 " align="left" width=400 height = auto> 
     </div>
     <div>
-<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/problem_figures/2.1_mixed_unstructuredd.jpg" align="right" width=400 height = auto> 
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/problem_figures/2.1_mixed_unstructured.jpg" align="right" width=400 height = auto> 
     </div>
 </div>
+
+
+
+```python
+
+```
