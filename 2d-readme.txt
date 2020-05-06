@@ -36,14 +36,27 @@ u=K\F;
 trimesh(MESH.ConnectivityList,MESH.Points(:,1),MESH.Points(:,2),u); //plot solution
 ```
 _______________________________________________________________________________________________________________________________
-For example, 
-$$-
+### Example 1:
+<br>
+Solving
+$$-\nabla^2u(x,y)+u(x,y) = \pi^2e^{-x}sin(\pi y) \text{ on the unit square } \Omega:[0,1]\times[0,1]$$
+<br>
+with boundary conditions
+<br>
+$$u(0,y) = sin(\pi y),\; u(x,1) = 0,\; u(1,y) = \frac{sin(\pi y)}{e},\; u(x,0) = 0$$
+<br>
+we obtain an exact solution of $u(x,y) = e^{-x}sin(\pi y)$ (left), compared to our FEM solution (right).
 
 <div>
     <div>
-<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/figures/2.1_dirichlet_exact.jpg" align="left" width=400 height = auto> 
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/exp(-x)sin(piy)_exact.jpg" align="left" width=400 height = auto> 
     </div>
     <div>
-<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/figures/2.1_dirichlet_mesh3.jpg" align="right" width=400 height = auto> 
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/exp(-x)sin(piy)_fem.jpg" align="right" width=400 height = auto> 
     </div>
 </div>
+
+_______________________________________________________________________________________________________________________________
+### Example 2:
+<br>
+Solving

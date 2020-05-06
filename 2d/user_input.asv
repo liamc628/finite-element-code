@@ -3,8 +3,8 @@ p = 1;
 
 
 k_func = (@(x,y) 1);
-b_func = (@(x,y) 0);
-f_func = (@(x,y) pi^2*exp(-x)*sin(pi*y));
+b_func = (@(x,y) 1);
+f_func = (@(x,y) 2-3*y^2-6*x^3*y^2+y^4+x^2*(6*y^2-2)+x*(2+4*y^2-4*y^4));
 
 D_x = [0,1] %x-domain
 D_y = [0,1] %y-domain
@@ -20,13 +20,27 @@ D_y = [0,1] %y-domain
 
 %Dirichlet
 
-boundary_1_func = (@(y) sin(y));
+boundary_1_func = (@(y) 0);
 boundary_2_func = (@(x) 0);
-boundary_3_func = (@(y) exp(-1)*sin(y));
+boundary_3_func = (@(y) 0);
 boundary_4_func = (@(x) 0);
 
 %BC check corners
+if(boundary_1_func(D_y(1)) ~= boundary_4_func(D_x(1)))
+    disp('Warning: lower-left corner BC');
+end
 
+if(boundary_1_func(D_y(2)) ~= boundary_2_func(D_x(1)))
+    disp('Warning: top-left corner BC');
+end
+
+if(boundary_2_func(D_x(2)) ~= boundary_3_func(D_y(2)))
+    disp('Warning: top-right corner BC');
+end
+
+if(boundary_4_func(D_x(2)) ~= boundary_3_func(D_y(1)))
+    disp('Warning: lower-left corner BC');
+end
 
 %Generate Mesh
 

@@ -1,10 +1,12 @@
 clear all;
+
 %{
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Unstructured_Mesh');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.1\Mixed\Unstructured Mesh');
 read_2D_mesh;
-assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.2\Unstructured_Mesh');
+assignin('base','filePath', 'C:\Users\monke\OneDrive\Desktop\5168\project\2d\Problem_2.1\Mixed\Unstructured Mesh');
 read_2D_input;
 %}
+
 user_input;
 
 %main
@@ -27,12 +29,12 @@ y=D_y(1):0.01:D_y(2);
 
 
 %2.1 Mixed exact solution
-%u_exact=(x.^2-x).*(y.^2-1);
+u_exact=(x.^2-x).*(y.^2-1);
 
 
 %2.2 exact solution (Inhomogenous Dirichlet)
 %u_exact=(cosh(10*x)+cosh(10*y))/(2*cosh(10));
-u_exact = exp(-x).*sin(pi*y);
+
 figure(2);
 surf(x,y,u_exact);
 %--------------------------------------------------------------------------
