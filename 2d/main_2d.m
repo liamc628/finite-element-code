@@ -18,34 +18,31 @@ xlabel('x'); ylabel('y'); zlabel('z');
 
 
 %hold on;
-x=0:0.01:1;
-y=0:0.01:1;
+x=D_x(1):0.01:D_x(2);
+y=D_y(1):0.01:D_y(2);
 [x,y]=meshgrid(x,y);
 
 %2.1 Dirichlet exact solution
-
 %u_exact=x.*y.*(1-x).*(1-y);
 
 
 %2.1 Mixed exact solution
-
-u_exact=(x.^2-x).*(y.^2-1);
+%u_exact=(x.^2-x).*(y.^2-1);
 
 
 %2.2 exact solution (Inhomogenous Dirichlet)
-
 %u_exact=(cosh(10*x)+cosh(10*y))/(2*cosh(10));
-
-%figure(2);
-%surf(x,y,u_exact);
+u_exact = exp(-x).*sin(pi*y);
+figure(2);
+surf(x,y,u_exact);
 %--------------------------------------------------------------------------
 
 
 %error
 %u_function=(@(x,y) (x*y*(1-x)*(1-y))); %2.1 Dirichlet exact
 %u_function=(@(x,y) (x^2-x)*(y^2-1)); %2.1 Mixed exact
-u_function=(@(x,y) (cosh(10*x)+cosh(10*y))/(2*cosh(10))); %2.2 exact
-
+%u_function=(@(x,y) (cosh(10*x)+cosh(10*y))/(2*cosh(10))); %2.2 exact
+%{
 L_2=0; L_inf=0;
 q=quadtriangle(2,'Domain',[0 0; 0 1; 1 0],'Type','nonproduct');
 polyvals = zeros(3,3);
@@ -93,6 +90,7 @@ L_2=sqrt(L_2);
 disp(['L_2 error norm:',num2str(L_2)]);
 disp(['L_inf error norm:',num2str(L_inf)]);
 disp(mean(avg));
+%}
 
 
 

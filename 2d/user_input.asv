@@ -3,7 +3,7 @@ p = 1;
 
 
 k_func = (@(x,y) 1);
-b_func = (@(x,y) 1);
+b_func = (@(x,y) 0);
 f_func = (@(x,y) pi^2*exp(-x)*sin(pi*y));
 
 D_x = [0,1] %x-domain
@@ -20,9 +20,9 @@ D_y = [0,1] %y-domain
 
 %Dirichlet
 
-boundary_1_func = (@(y) sin(pi*y));
+boundary_1_func = (@(y) sin(y));
 boundary_2_func = (@(x) 0);
-boundary_3_func = (@(y) exp(-1)*sin(pi*y));
+boundary_3_func = (@(y) exp(-1)*sin(y));
 boundary_4_func = (@(x) 0);
 
 %BC check corners
