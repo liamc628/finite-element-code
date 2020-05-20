@@ -19,24 +19,26 @@ xlabel('x'); ylabel('y'); zlabel('z');
 
 
 
-%hold on;
+%for exact solution (rectangular domain)
+%{
 x=D_x(1):0.01:D_x(2);
 y=D_y(1):0.01:D_y(2);
 [x,y]=meshgrid(x,y);
+%}
 
 %2.1 Dirichlet exact solution
 %u_exact=x.*y.*(1-x).*(1-y);
 
 
 %2.1 Mixed exact solution
-u_exact=(x.^2-x).*(y.^2-1);
+%u_exact=(x.^2-x).*(y.^2-1);
 
 
 %2.2 exact solution (Inhomogenous Dirichlet)
 %u_exact=(cosh(10*x)+cosh(10*y))/(2*cosh(10));
 
-figure(2);
-surf(x,y,u_exact);
+%figure(2);
+%surf(x,y,u_exact);
 %--------------------------------------------------------------------------
 
 
