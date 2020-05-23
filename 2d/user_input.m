@@ -2,9 +2,9 @@ p = 1;
 
 
 
-k_func = (@(x,y) exp(x+y));
-b_func = (@(x,y) 0);
-f_func = (@(x,y) x^2*y);
+k_func = (@(x,y) 1);
+b_func = (@(x,y) x*y);
+f_func = (@(x,y) 0);
 
 %change domain shape
 %rectangle_mesh;

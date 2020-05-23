@@ -1,5 +1,5 @@
 %boundary conditions
-boundary_func = (@(t) 0);
+boundary_func = (@(t) sin(2*t));
 dirichletNodes = [];
 
 if boundary_func(0)-boundary_func(2*pi)>1e-6
@@ -7,7 +7,7 @@ if boundary_func(0)-boundary_func(2*pi)>1e-6
 end
 
 %circle domain
-radius = 1;
+radius = 3;
 center_x = 0; center_y = 0;
 max_elem_size = 0.05;
 
