@@ -1,12 +1,4 @@
-p = 1;
-
-
-
-k_func = (@(x,y) 1);
-b_func = (@(x,y) 1);
-f_func = (@(x,y) sin(x*y*2*pi));
-
-%boundary condition
+%boundary conditions
 boundary_func = (@(t) 0);
 dirichletNodes = [];
 
@@ -17,25 +9,18 @@ end
 %circle domain
 radius = 1;
 center_x = 0; center_y = 0;
+max_elem_size = 0.05;
 
-%mesh precision
-r_prec = radius/20; theta_prec = 2*pi/60;
 
-x = []; y = [];
-
-for r = 1:20
-    for theta = 1:60
-        x = [x (r*r_prec)*cos(theta*theta_prec)];
-        y = [y (r*r_prec)*sin(theta*theta_prec)];     
-    end
-end
-x = [center_x x]; y = [center_y y];
-
-T=delaunay(x,y);
-MESH = triangulation(T,x(:),y(:));
+gd = [1,center_x,center_y,radius]';
+geo = decsg(gd);
+model = createpde;
+geometryFromEdges(model,geo);
+mesh = generateMesh(model,'GeometricOrder','linear','Hmax',max_elem_size);
+MESH = triangulation(mesh.Elements',mesh.Nodes(1,:)',mesh.Nodes(2,:)');
 nElems = length(MESH.ConnectivityList);
 nNodes = length(MESH.Points);
-triplot(MESH);
+%triplot(MESH);
 
 dirichletNodes = convhull(MESH.Points);
 dirichletValues = zeros(length(dirichletNodes),1);
