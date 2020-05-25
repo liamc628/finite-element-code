@@ -26,7 +26,7 @@ dirichletNodes = convhull(MESH.Points);
 dirichletValues = zeros(length(dirichletNodes),1);
 
 for i = 1:length(dirichletNodes)
-    dirichletValues(i,1) = boundary_func(cart2pol(MESH.Points(dirichletNodes(i),1),MESH.Points(dirichletNodes(i),2)));
+    dirichletValues(i,1) = boundary_func(cart2pol(MESH.Points(dirichletNodes(i),1)-center_x,MESH.Points(dirichletNodes(i),2)-center_y));
 end
 
 boundaryValues = containers.Map({'Dirichlet','Neumann'},{dirichletValues,[]});

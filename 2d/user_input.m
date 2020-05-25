@@ -3,12 +3,13 @@ p = 1;
 
 
 k_func = (@(x,y) 1);
-b_func = (@(x,y) x*y);
-f_func = (@(x,y) 0);
+b_func = (@(x,y) 0);
+f_func = (@(x,y) 100*sin(10*x*y));
 
 %change domain shape
 %rectangle_mesh;
-circle_mesh;
+%circle_mesh;
+example_mesh;
 
 %set k(x,y), b(x,y),f(x,y) values
 KofXY = zeros(nElems,1); BofXY = zeros(nElems,1); FofXY = zeros(nElems,1); 
