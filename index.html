@@ -13073,28 +13073,30 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="finite-element-code">finite-element-code<a class="anchor-link" href="#finite-element-code">&#182;</a></h2><p>This code computes a finite-element solution to boundary value problems of the form:
 <br></p>
-$$-\nabla\cdot(k(x,y)\;\nabla u(x,y)) + b(x,y)\;u(x,y) = f(x,y)$$<p>on the rectangular domain $\Omega$.</p>
+$$-\nabla\cdot(k(x,y)\;\nabla u(x,y)) + b(x,y)\;u(x,y) = f(x,y)$$<p><br>
+on some domain $\Omega$.</p>
 <p>With $N$ nodes and basis functions $\phi(x,y)_{i=1,2,...,N}$ , our FEM solution takes the form:
 $$\sum_{i=1}^{N} \alpha_i\;\phi_i(x,y)$$
 where $\phi_i(x,y)$ are piece-wise linear 'pyramid-shaped' functions about node $i$. 
-<br><br> 
-Also, let $u = \alpha_1,\alpha_2,...,\alpha_i$. 
+<br></p>
+<p>Also, let $u = \alpha_1,\alpha_2,...,\alpha_i$. 
 Then, $u$ is computed by $u=K^{-1}F$ where $K$ is the global stiffness matrix and $F$ is the global load vector.</p>
 <p>By default, the code uses a structured triangular mesh, but this can be easily maniputed in <code>user_input.m</code> as demonstrated in Example 2.</p>
-<p><br><br></p>
 <p>Currently only supports Dirichlet boundary conditions (or homogenous Neumann BCs for the mixed case).*</p>
 <hr>
-<p><br></p>
-<p>Begin by running <code>main_2d.m</code>, which consists of the following steps:</p>
+<p>Begin by initializing the problem in <code>user_input.m</code>.</p>
+<p><code>rectangle_domain.m</code> or <code>circle_domain.m</code> are used by default (see <code>user_input.m</code>).</p>
+<p>Any other custom meshes will need to be imported manually.</p>
+<p>Additionally, <code>MESH</code> is a Matlab triangulation object that stores two properties: <code>Points</code> and <code>ConnectivityList</code>.</p>
+<p>When ready, run <code>main_2d.m</code>, which consists of the following steps:</p>
 <div class="highlight"><pre><span></span><span class="n">user_input</span><span class="p">;</span> <span class="c1">//read problem input</span>
-<span class="n">psi</span> <span class="o">=</span> <span class="n">polyLagrange2D</span><span class="p">(</span><span class="n">p</span><span class="p">);</span> <span class="c1">//determine Lagrange shape functions of degree p (always using linear elements, p = 1)</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">polyLagrange2D</span><span class="p">(</span><span class="n">p</span><span class="p">);</span> <span class="c1">//determine Lagrange shape functions of degree p = 1</span>
 <span class="o">[</span><span class="n">K</span><span class="p">,</span><span class="n">F</span><span class="o">]=</span><span class="n">element2D</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span><span class="n">KofXY</span><span class="p">,</span><span class="n">BofXY</span><span class="p">,</span><span class="n">FofXY</span><span class="p">,</span><span class="n">MESH</span><span class="p">);</span> <span class="c1">//compute load/stiffness matrices</span>
 <span class="o">[</span><span class="n">K</span><span class="p">,</span><span class="n">F</span><span class="o">]=</span><span class="n">enforce2DBCs</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">F</span><span class="p">,</span><span class="n">KofXY</span><span class="p">,</span><span class="n">boundaryValues</span><span class="p">,</span><span class="n">boundaryNodes</span><span class="p">);</span> <span class="c1">//enforce boundary conditions</span>
 <span class="n">u</span><span class="o">=</span><span class="n">K</span><span class="err">\</span><span class="n">F</span><span class="p">;</span> 
 <span class="n">trimesh</span><span class="p">(</span><span class="n">MESH</span><span class="p">.</span><span class="na">ConnectivityList</span><span class="p">,</span><span class="n">MESH</span><span class="p">.</span><span class="na">Points</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span><span class="n">MESH</span><span class="p">.</span><span class="na">Points</span><span class="p">(:,</span><span class="mi">2</span><span class="p">),</span><span class="n">u</span><span class="p">);</span> <span class="c1">//plot solution</span>
 </pre></div>
-<hr>
-<h3 id="Example-1:">Example 1:<a class="anchor-link" href="#Example-1:">&#182;</a></h3><p><br>
+<h3 id="Example-1-(structured-rectangular-mesh):">Example 1 (structured rectangular mesh):<a class="anchor-link" href="#Example-1-(structured-rectangular-mesh):">&#182;</a></h3><p>
 Solving
 $$-\nabla^2u(x,y)+u(x,y) = \pi^2e^{-x}sin(\pi y) \text{ on the unit square } \Omega:[0,1]\times[0,1]$$
 <br>
@@ -13102,17 +13104,23 @@ with Dirichlet boundary conditions
 <br>
 $$u(0,y) = sin(\pi y),\; u(x,1) = 0,\; u(1,y) = \frac{sin(\pi y)}{e},\; u(x,0) = 0$$
 <br>
-we obtain an exact solution of $u(x,y) = e^{-x}sin(\pi y)$ (left), compared to our FEM solution (right).</p>
+we obtain an exact solution of $u(x,y) = e^{-x}sin(\pi y)$ (left), compared to our FEM solution (right).
+
+
+
 <div>
-    <div>
+<div>
 <img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/exp(-x)sin(piy)_exact.jpg" align="left" width=400 height = auto> 
     </div>
     <div>
-<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/exp(-x)sin(piy)_fem.jpg" align="right" width=400 height = auto> 
-    </div>
-</div><p><br></p>
-<hr>
-<h3 id="Example-2:">Example 2:<a class="anchor-link" href="#Example-2:">&#182;</a></h3><p><br>
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/exp(-x)sin(piy)_fem.jpg" align="center" width=400 height = auto> 
+    </div> 
+</div>
+
+<br>
+
+</p><h3 id="Example-2-(unstructured-rectangular-mesh):">Example 2 (unstructured rectangular mesh):<a class="anchor-link" href="#Example-2-(unstructured-rectangular-mesh):">&#182;</a></h3><p>
+
 Solving
 $$-\nabla\cdot((1+xy^2)\nabla u(x,y)) = 2-3y^2-6x^3y^2+y^4+x^2(6y^2-2)+x(2+4y^2-4y^4)$$
 <br>
@@ -13120,15 +13128,59 @@ with mixed boundary conditions
 <br>
 $$u(0,y) = u(x,1) = u(1,y) = 0,\; \frac{\partial u(x,0)}{\partial y} = 0 $$
 <br>
-we find our exact solution to be $u(x,y) = (x^2-x)(y^2-1)$ (left) and also an FEM solution, this time using an unstructured mesh (right).</p>
-<div>
+we find our exact solution to be $u(x,y) = (x^2-x)(y^2-1)$ (left) and also an FEM solution, this time using an unstructured mesh (right).
+
+</p><div>
     <div>
 <img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/problem_figures/2.1_mixed_exact.jpg" align="left" width=400 height = auto> 
     </div>
     <div>
-<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/problem_figures/2.1_mixed_unstructured.jpg" align="right" width=400 height = auto> 
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/problem_figures/2.1_mixed_unstructured.jpg" align="center" width=400 height = auto> 
     </div>
+</div><p><br></p>
+<p><br></p>
+<h3 id="Example-3,-4-(circular-mesh):">Example 3, 4 (circular mesh):<a class="anchor-link" href="#Example-3,-4-(circular-mesh):">&#182;</a></h3><p>
+Solutions are also computable across circular domains:
+
+   $$\Omega: \{(x, y) \in \Bbb R^2, \; x^2 + y^2 \le 1 \}$$
+
+   $$-\nabla\cdot((e^{x+y})\nabla u(x,y)) = x^2y\,, \quad u(x,y) = 0 \;\text{on}\; \partial\Omega$$
+<div>
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/circle1.jpg" align="center" width=400 height = auto> 
+    </div>
+
+_______________________________________________________________________________________________________
+
+
+$$\Omega: \{(x, y) \in \Bbb R^2, \; x^2 + y^2 \le 9 \}$$
+
+$$-\nabla^2(u(x,y)) + xyu(x,y) = 0\,, \quad u(x,y) = sin(2\theta) \;\text{on}\; \partial\Omega$$
+<div>
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/circle2.jpg" align="center" width=400 height = auto> 
 </div>
+
+</p><h3 id="Example-5:">Example 5:<a class="anchor-link" href="#Example-5:">&#182;</a></h3><p>As discussed previously, this code is not limited to just rectangular/circular domains.</p>
+<p>Any appropriately defined 2-D mesh with boundary conditions is computable.</p>
+<p>Here are a few examples:
+$$\Omega: \{(x,y) \in \Bbb R^2, \; [(x-1)^2 + (y-1)^2 \ge 1/16] \land [0 \le x \le 2] \land [0 \le y \le 2]\}$$</p>
+$$-\nabla^2u(x,y) = 100sin(10xy)\,, \quad u(x,y) = 0 \;\text{on}\; \partial\Omega_1,\;u(x,y) = sin(3\theta) \;\text{on}\; \partial\Omega_2$$<div>
+    <div>
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/custom1.jpg" align="left" width=400 height = auto> 
+    </div>
+    <div>
+        <img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/custom_mesh1.jpg" align="center" width=400 height = auto> 
+    </div>
+</div><p>This mesh was created using Matlab's <code>geometryFromEdges</code> function. See <code>custom_mesh1.m</code>.</p>
+<hr>
+$$\Omega: \{(x,y) \in \Bbb R^2, \; [(x-2)^2+y^2 \ge 1.2^2] \land [(x-4)^2+(y-2)^2 \ge 1.2^2]$$$$\land [(x-2)^2+(y-4)^2 \ge 1.2^2] \land [x^2 + (y-2)^2 \ge 1.2^2] \land [0 \le x \le 4] \land [0 \le y \le 4]\}$$$$-\nabla\cdot([(x-2)^2y+(y-2)^2]\nabla u(x,y)) = (x-2)(y-2)\,, \quad u(x,y) = 0 \;\text{on}\; \partial\Omega$$<div>
+    <div>
+<img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/custom2.jpg" align="left" width=400 height = auto> 
+    </div>
+    <div>
+        <img src="https://raw.githubusercontent.com/liamc628/finite-element-code/master/2d/test_figures/custom_mesh2.jpg" align="center" width=400 height = auto> 
+    </div>
+</div><p>See <code>custom_mesh2.m</code>.</p>
+
 </div>
 </div>
 </div>
@@ -13137,7 +13189,7 @@ we find our exact solution to be $u(x,y) = (x^2-x)(y^2-1)$ (left) and also an FE
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
