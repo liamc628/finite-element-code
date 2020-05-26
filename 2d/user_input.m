@@ -2,14 +2,15 @@ p = 1;
 
 
 
-k_func = (@(x,y) 1);
+k_func = (@(x,y) (x-2)^2*(y)+(y-2)^2);
 b_func = (@(x,y) 0);
-f_func = (@(x,y) 100*sin(10*x*y));
+f_func = (@(x,y) (x-2)*(y-2));
 
 %change domain shape
 %rectangle_mesh;
 %circle_mesh;
-example_mesh;
+%custom_mesh1;
+custom_mesh2;
 
 %set k(x,y), b(x,y),f(x,y) values
 KofXY = zeros(nElems,1); BofXY = zeros(nElems,1); FofXY = zeros(nElems,1); 
